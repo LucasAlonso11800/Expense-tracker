@@ -23,9 +23,9 @@ router.post('/add', async (req, res) => {
 });
 
 router.post('/get', async (req, res) => {
-    const { type, amount, dateFrom, dateTo, categoryId, userId } = req.body;
+    const { type, dateFrom, dateTo, categoryId, userId } = req.body;
 
-    const where = getMovementsConditional(type, amount, dateFrom, dateTo, categoryId, userId);
+    const where = getMovementsConditional(type, dateFrom, dateTo, categoryId, userId);
 
     const query = `
         SELECT

@@ -35,7 +35,25 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
             const { error } = action.payload;
             console.log(error)
             return state
-        }
+        };
+        case HomePageActionTypes.FETCH_CATEGORIES_BEGIN: return {
+            ...state,
+            categories: [],
+            categoriesLoading: true
+        };
+        case HomePageActionTypes.FETCH_CATEGORIES_SUCCESS: {
+            const { categories } = action.payload;
+            return {
+                ...state,
+                categories,
+                categoriesLoading: false
+            };    
+        };
+        case HomePageActionTypes.FETCH_CATEGORIES_FAILED: {
+            const { error } = action.payload;
+            console.log(error);
+            return state
+        }; 
         default: return state
     }
 };

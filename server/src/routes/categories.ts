@@ -35,7 +35,7 @@ router.post('/get', async (req, res) => {
 
     try {
         const categories = await mysqlQuery(query);
-        return categories
+        res.json(categories);
     }
     catch (err: any) {
         throw new Error(err);

@@ -1,4 +1,4 @@
-import { MovementType } from "../../types";
+import { CategoryType, MovementType } from "../../types";
 import { HomePageActionTypes } from "./HomePage.actionTypes";
 
 type HomePageFetchMovementsBeginAction = {
@@ -18,4 +18,29 @@ type HomePageFetchMovementsFailedAction = {
     }
 };
 
-export type HomePageAction = HomePageFetchMovementsBeginAction | HomePageFetchMovementsSuccessAction | HomePageFetchMovementsFailedAction;
+type HomePageFetchCategoriesBeginAction = {
+    type: HomePageActionTypes.FETCH_CATEGORIES_BEGIN
+};
+
+type HomePageFetchCategoriesSuccessAction = {
+    type: HomePageActionTypes.FETCH_CATEGORIES_SUCCESS,
+    payload: {
+        categories: CategoryType[]
+    }
+};
+
+type HomePageFetchCategoriesFailedAction = {
+    type: HomePageActionTypes.FETCH_CATEGORIES_FAILED,
+    payload: {
+        error: any
+    }
+};
+
+export type HomePageAction =
+    HomePageFetchMovementsBeginAction |
+    HomePageFetchMovementsSuccessAction |
+    HomePageFetchMovementsFailedAction |
+    HomePageFetchCategoriesBeginAction |
+    HomePageFetchCategoriesSuccessAction |
+    HomePageFetchCategoriesFailedAction
+    ;
