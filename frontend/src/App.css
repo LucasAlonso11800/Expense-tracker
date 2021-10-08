@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.movements-table__container{
+    height: 80vh;
+    width: 1032px;
+    padding: 1rem;
+}

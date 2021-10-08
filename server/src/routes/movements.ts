@@ -23,9 +23,9 @@ router.post('/add', async (req, res) => {
 });
 
 router.post('/get', async (req, res) => {
-    const { type, amount, date, categoryId, userId } = req.body;
+    const { type, amount, dateFrom, dateTo, categoryId, userId } = req.body;
 
-    const where = getMovementsConditional(type, amount, date, categoryId, userId);
+    const where = getMovementsConditional(type, amount, dateFrom, dateTo, categoryId, userId);
 
     const query = `
         SELECT
@@ -38,7 +38,8 @@ router.post('/get', async (req, res) => {
         FROM movements
         JOIN categories
         ON category_id = movement_category_id
-        ${where} 
+        ${where}
+        ORDER BY movement_date 
     `;
 
     try {   
