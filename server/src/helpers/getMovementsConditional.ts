@@ -2,7 +2,7 @@ type Param = string | number | null;
 type StringParam = string | null;
 type NumberParam = number | null;
 
-export const getMovementsConditional = (type: StringParam, amount: NumberParam, date: StringParam, categoryId: NumberParam, userId: NumberParam): string => {
+export const getMovementsConditional = (type: StringParam, amount: NumberParam, date: StringParam, categoryId: NumberParam, userId: number): string => {
     const where = [type, amount, date, categoryId].reduce((acc: string, param: Param, index: number) => {
         switch(index){
             case 0: {

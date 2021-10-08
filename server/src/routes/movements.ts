@@ -37,11 +37,11 @@ router.post('/get', async (req, res) => {
             category_name AS category
         FROM movements
         JOIN categories
-        ON category_id = ${categoryId}
+        ON category_id = movement_category_id
         ${where} 
     `;
 
-    try {
+    try {   
         const movements = await mysqlQuery(query)
         res.json(movements)
     }
