@@ -1,4 +1,5 @@
-import { CategoryType, MovementType } from "../../types";
+import { GridRowParams } from "@material-ui/data-grid";
+import { CategoryType, ModalAction, MovementType } from "../../types";
 import { HomePageActionTypes } from "./HomePage.actionTypes";
 
 type HomePageFetchMovementsBeginAction = {
@@ -36,11 +37,50 @@ type HomePageFetchCategoriesFailedAction = {
     }
 };
 
+type HomePageSelectRowAction = {
+    type: HomePageActionTypes.SELECT_ROW,
+    payload: {
+        row: GridRowParams | null
+    }
+};
+
+type HomePageOpenModalAction = {
+    type: HomePageActionTypes.OPEN_MODAL,
+    payload: {
+        modalAction: ModalAction
+    }
+};
+
+type HomePageCloseModalAction = {
+    type: HomePageActionTypes.CLOSE_MODAL
+};
+
+type HomePageAddMovementBeginAction = {
+    type: HomePageActionTypes.ADD_MOVEMENT_BEGIN
+};
+
+type HomePageAddMovementSuccessAction = {
+    type: HomePageActionTypes.ADD_MOVEMENT_SUCCESS
+};
+
+type HomePageAddMovementFailedAction = {
+    type: HomePageActionTypes.ADD_MOVEMENT_FAILED,
+    payload: {
+        error: any
+    }
+};
+
 export type HomePageAction =
     HomePageFetchMovementsBeginAction |
     HomePageFetchMovementsSuccessAction |
     HomePageFetchMovementsFailedAction |
     HomePageFetchCategoriesBeginAction |
     HomePageFetchCategoriesSuccessAction |
-    HomePageFetchCategoriesFailedAction
+    HomePageFetchCategoriesFailedAction |
+    HomePageSelectRowAction |
+    HomePageOpenModalAction |
+    HomePageCloseModalAction |
+    HomePageAddMovementBeginAction | 
+    HomePageAddMovementSuccessAction |
+    HomePageAddMovementFailedAction
     ;

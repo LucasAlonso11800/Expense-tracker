@@ -12,5 +12,7 @@ export type CategoryType = {
     name: string
 }; 
 
+export type ModalAction = 'Add' | 'Edit' | 'Delete' | null;
+
 export type StringParam = string | null;
 export type NumberParam = number | null;
