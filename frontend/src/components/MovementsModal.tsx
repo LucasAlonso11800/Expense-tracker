@@ -58,7 +58,7 @@ export default function MovementsModal() {
 
     const { closeModal, addMovement, editMovement, deleteMovement, fetchMovements } = bindActionCreators(HomePageActionCreators, dispatch);
 
-    const refreshTable = () => fetchMovements(null, dateFrom, dateTo, null, 1, 1);
+    const refreshTable = () => fetchMovements(null, dateFrom, dateTo, null, 1, accountId);
 
     const formik = useFormik({
         initialValues: {

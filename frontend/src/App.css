@@ -34,7 +34,7 @@ body {
 
 .movements-table__container{
     height: 80vh;
-    width: 1032px;
+    width: 1000px;
     display: flex;
     justify-content: center;
     align-items: center;

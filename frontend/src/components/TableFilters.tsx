@@ -67,7 +67,7 @@ export default function TableFilters() {
             </TextField>
             <TextField
                 label="From"
-                name="from"
+                name="dateFrom"
                 type="date"
                 variant="filled"
                 InputLabelProps={{ shrink: true }}
@@ -76,7 +76,7 @@ export default function TableFilters() {
             />
             <TextField
                 label="To"
-                name="to"
+                name="dateTo"
                 type="date"
                 variant="filled"
                 InputLabelProps={{ shrink: true }}

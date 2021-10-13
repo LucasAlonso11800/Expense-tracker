@@ -15,16 +15,15 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-
 const startOfTheMonth = new Date().setDate(1);
 const dateFrom = new Date(startOfTheMonth).toISOString().substring(0, 10);
 const dateTo = new Date().toISOString().substring(0, 10);
 
 export default function AccountsSelect() {
-    const [accountSelected, setAccountSelected] = useState(1);
-
     const dispatch = useDispatch();
-    const { accounts, accountsLoading } = useSelector((state: State) => state.HomePage);
+    const { accounts, accountsLoading, accountId } = useSelector((state: State) => state.HomePage);
+    
+    const [accountSelected, setAccountSelected] = useState(accountId);
 
     const classes = useStyles();
 
