@@ -1,5 +1,5 @@
 import { GridColumns } from "@material-ui/data-grid";
-import { transformDate } from "./TransformDate";
+import { transformDate, transformDateBack } from "./TransformDate";
 
 const getWidth = (title: string): number => {
     switch (title) {
@@ -39,6 +39,25 @@ export const generateTableColumns = (titles: string[]): GridColumns => {
                     if (params.row.type === 'O') return <p style={{ color: '#900' }}>- ${params.value}</p>
                 }
                 return params.value
+            },
+            sortComparator: (v1, v2) => {
+                if (typeof v1 === 'number' && typeof v2 === 'number') return v1 - v2;
+                if (typeof v1 === 'string' && typeof v2 === 'string'){
+                    if (/\d{4}-\d{2}-\d{2}/.test(transformDateBack(v1)) && /\d{4}-\d{2}-\d{2}/.test(transformDateBack(v2))){
+                        return parseInt(transformDateBack(v1).replace(/-/g, '')) - parseInt(transformDateBack(v2).replace(/-/g, '')) 
+                    } 
+    
+                    let first = "";
+                    for (let i = 0; i < v1.length; i++) {
+                        first += v1[i].charCodeAt(0).toString(2) + " ";
+                    }
+                    let second = "";
+                    for (let i = 0; i < v2.length; i++) {
+                        second += v2[i].charCodeAt(0).toString(2) + " ";
+                    }
+                    return parseInt(first, 2) - parseInt(second, 2)
+                }
+                return 1
             }
         }
     ));
