@@ -10,6 +10,7 @@ import TableFilters from '../components/TableFilters';
 import { State } from '../state/RootReducer'
 import Buttons from '../components/Buttons';
 import MovementsModal from '../components/MovementsModal';
+import PeriodTotal from '../components/PeriodTotal';
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -18,18 +19,21 @@ export default function HomePage() {
     const { fetchMovements, fetchCategories } = bindActionCreators(HomePageActionCreators, dispatch);
 
     useEffect(() => {
-            fetchMovements(null,
-                '2021-10-01',
-                new Date().toISOString().substring(0, 10),
-                null,
-                1);
-            fetchCategories(1);
+        fetchMovements(null,
+            '2021-10-01',
+            new Date().toISOString().substring(0, 10),
+            null,
+            1);
+        fetchCategories(1);
     }, []);
 
     return (
         <main className="home-page__container">
-            <MovementsTable />
-            <div className="actions-and-table__container">
+            <div className="table-and-total__container">
+                <MovementsTable />
+                <PeriodTotal />
+            </div>
+            <div className="actions-and-filters__container">
                 <Buttons />
                 <TableFilters />
             </div>

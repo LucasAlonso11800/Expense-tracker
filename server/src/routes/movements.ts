@@ -6,7 +6,7 @@ export const router = Router();
 
 router.post('/add', async (req, res) => {
     const { type, amount, date, description, categoryId, userId } = req.body;
-    console.log('Here')
+
     const query = `
         INSERT INTO movements 
         (movement_type, movement_amount, movement_date, movement_description, movement_category_id, movement_user_id)

@@ -91,7 +91,8 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
             ...state,
             modalOpen: false,
             modalAction: null,
-            modalLoading: false
+            modalLoading: false,
+            rowSelected: null
         };
         case HomePageActionTypes.MUTATE_MOVEMENT_FAILED: {
             const { error } = action.payload;

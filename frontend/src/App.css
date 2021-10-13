@@ -18,7 +18,13 @@ body {
     align-items: flex-start;
 }
 
-.actions-and-table__container{
+.table-and-total__container{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.actions-and-filters__container{
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -29,7 +35,6 @@ body {
 .movements-table__container{
     height: 80vh;
     width: 1032px;
-    padding: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,4 +42,8 @@ body {
 
 .table-filter__container{
     margin: auto;
+}
+
+.period-total{
+    margin-top: 1rem;
 }

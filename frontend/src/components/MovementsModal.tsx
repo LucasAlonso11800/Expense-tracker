@@ -57,7 +57,7 @@ export default function MovementsModal() {
     const { modalOpen, modalAction, modalLoading, categories, categoriesLoading, rowSelected } = useSelector((state: State) => state.HomePage);
 
     const { closeModal, addMovement, editMovement, deleteMovement, fetchMovements } = bindActionCreators(HomePageActionCreators, dispatch);
-    
+
     const refreshTable = () => fetchMovements(null, dateFrom, dateTo, null, 1);
 
     const formik = useFormik({
@@ -73,21 +73,18 @@ export default function MovementsModal() {
         onSubmit: (values) => {
             const { type, amount, date, description, category } = values;
             switch (modalAction) {
-                case 'Add': {
+                case 'Add':
                     addMovement(type, amount, date, description, category, 1);
                     refreshTable();
-                    return
-                };
-                case 'Edit': {
+                    return;
+                case 'Edit':
                     editMovement(rowSelected?.row.id, type, amount, date, description, category);
                     refreshTable()
-                    return
-                };
-                case 'Delete': {
+                    return;
+                case 'Delete': 
                     deleteMovement(rowSelected?.row.id);
                     refreshTable();
-                    return
-                };
+                    return;
                 default: return
             }
         }
