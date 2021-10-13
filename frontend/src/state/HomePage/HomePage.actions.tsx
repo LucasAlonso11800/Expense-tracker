@@ -1,5 +1,5 @@
 import { GridRowParams } from "@material-ui/data-grid";
-import { CategoryType, ModalAction, MovementType } from "../../types";
+import { AccountType, CategoryType, ModalAction, MovementType } from "../../types";
 import { HomePageActionTypes } from "./HomePage.actionTypes";
 
 type HomePageFetchMovementsBeginAction = {
@@ -32,6 +32,23 @@ type HomePageFetchCategoriesSuccessAction = {
 
 type HomePageFetchCategoriesFailedAction = {
     type: HomePageActionTypes.FETCH_CATEGORIES_FAILED,
+    payload: {
+        error: any
+    }
+};
+
+type HomePageFetchAccountsBeginAction = {
+    type: HomePageActionTypes.FETCH_ACCOUNTS_BEGIN
+};
+
+type HomePageFetchAccountsSuccessAction = {
+    type: HomePageActionTypes.FETCH_ACCOUNTS_SUCCESS,
+    payload: {
+        accounts: AccountType[]
+    }
+};
+type HomePageFetchAccountsFailedAction = {
+    type: HomePageActionTypes.FETCH_ACCOUNTS_FAILED,
     payload: {
         error: any
     }
@@ -70,6 +87,13 @@ type HomePageMutateMovementFailedAction = {
     }
 };
 
+type HomePageChangeSelectedAccountAction = {
+    type: HomePageActionTypes.CHANGE_SELECTED_ACCOUNT,
+    payload: {
+        accountId: number
+    }
+};
+
 export type HomePageAction =
     HomePageFetchMovementsBeginAction |
     HomePageFetchMovementsSuccessAction |
@@ -77,10 +101,14 @@ export type HomePageAction =
     HomePageFetchCategoriesBeginAction |
     HomePageFetchCategoriesSuccessAction |
     HomePageFetchCategoriesFailedAction |
+    HomePageFetchAccountsBeginAction |
+    HomePageFetchAccountsSuccessAction |
+    HomePageFetchAccountsFailedAction |
     HomePageSelectRowAction |
     HomePageOpenModalAction |
     HomePageCloseModalAction |
     HomePageMutateMovementBeginAction | 
     HomePageMutateMovementSuccessAction |
-    HomePageMutateMovementFailedAction
+    HomePageMutateMovementFailedAction |
+    HomePageChangeSelectedAccountAction
     ;

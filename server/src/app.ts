@@ -6,6 +6,7 @@ import 'dotenv/config';
 import { router as movementsRouter } from './routes/movements';
 import { router as categoriesRouter } from './routes/categories';
 import { router as usersRouter } from './routes/users';
+import { router as accountsRouter } from './routes/accounts';
 
 const app = express();
 
@@ -28,6 +29,7 @@ connection.connect((err) => {
 app.use('/movements', movementsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/users', usersRouter);
+app.use('/accounts', accountsRouter);
 
 const PORT = 5000 || process.env.PORT;
 

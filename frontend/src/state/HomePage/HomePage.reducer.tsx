@@ -1,5 +1,5 @@
 import { GridRowParams } from "@material-ui/data-grid";
-import { CategoryType, ModalAction, MovementType } from "../../types";
+import { AccountType, CategoryType, ModalAction, MovementType } from "../../types";
 import { HomePageAction } from "./HomePage.actions";
 import { HomePageActionTypes } from "./HomePage.actionTypes";
 
@@ -8,10 +8,13 @@ type HomePageState = {
     movementsLoading: boolean
     categories: CategoryType[]
     categoriesLoading: boolean
+    accounts: AccountType[]
+    accountsLoading: boolean
     modalOpen: boolean
     modalAction: ModalAction
     modalLoading: boolean
     rowSelected: GridRowParams | null
+    accountId: number
 };
 
 const initialState: HomePageState = {
@@ -19,10 +22,13 @@ const initialState: HomePageState = {
     movementsLoading: false,
     categories: [],
     categoriesLoading: false,
+    accounts: [],
+    accountsLoading: false,
     modalOpen: false,
     modalAction: null,
     modalLoading: false,
-    rowSelected: null
+    rowSelected: null,
+    accountId: 1
 };
 
 export const HomePageReducer = (state: HomePageState = initialState, action: HomePageAction): HomePageState => {
@@ -30,7 +36,7 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
         case HomePageActionTypes.FETCH_MOVEMENTS_BEGIN: return {
             ...state,
             movements: [],
-            movementsLoading: true
+            movementsLoading: true,
         };
         case HomePageActionTypes.FETCH_MOVEMENTS_SUCCESS: {
             const { movements } = action.payload;
@@ -59,6 +65,24 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
             };
         };
         case HomePageActionTypes.FETCH_CATEGORIES_FAILED: {
+            const { error } = action.payload;
+            console.log(error);
+            return state
+        };
+        case HomePageActionTypes.FETCH_ACCOUNTS_BEGIN: return {
+            ...state,
+            accountsLoading: true,
+            accounts: []
+        };
+        case HomePageActionTypes.FETCH_ACCOUNTS_SUCCESS: {
+            const { accounts } = action.payload;
+            return {
+                ...state,
+                accounts,
+                accountsLoading: false
+            };
+        };
+        case HomePageActionTypes.FETCH_ACCOUNTS_FAILED: {
             const { error } = action.payload;
             console.log(error);
             return state
@@ -98,6 +122,10 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
             const { error } = action.payload;
             console.log(error);
             return state
+        }
+        case HomePageActionTypes.CHANGE_SELECTED_ACCOUNT: return {
+            ...state,
+            accountId: action.payload.accountId,
         }
         default: return state
     }

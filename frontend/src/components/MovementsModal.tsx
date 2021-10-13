@@ -54,11 +54,11 @@ const dateTo = new Date().toISOString().substring(0, 10);
 
 export default function MovementsModal() {
     const dispatch = useDispatch();
-    const { modalOpen, modalAction, modalLoading, categories, categoriesLoading, rowSelected } = useSelector((state: State) => state.HomePage);
+    const { modalOpen, modalAction, modalLoading, categories, categoriesLoading, rowSelected, accountId } = useSelector((state: State) => state.HomePage);
 
     const { closeModal, addMovement, editMovement, deleteMovement, fetchMovements } = bindActionCreators(HomePageActionCreators, dispatch);
 
-    const refreshTable = () => fetchMovements(null, dateFrom, dateTo, null, 1);
+    const refreshTable = () => fetchMovements(null, dateFrom, dateTo, null, 1, 1);
 
     const formik = useFormik({
         initialValues: {
@@ -74,7 +74,7 @@ export default function MovementsModal() {
             const { type, amount, date, description, category } = values;
             switch (modalAction) {
                 case 'Add':
-                    addMovement(type, amount, date, description, category, 1);
+                    addMovement(type, amount, date, description, category, 1, accountId);
                     refreshTable();
                     return;
                 case 'Edit':

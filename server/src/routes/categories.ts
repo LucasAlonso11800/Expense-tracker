@@ -29,7 +29,7 @@ router.post('/get', async (req, res) => {
             category_id AS id,
             category_name AS name
         FROM categories
-        WHERE category_id = ${userId} OR category_root = "Y"
+        WHERE category_user_id = ${userId} OR category_root = "Y"
         ORDER BY name
     `;
 

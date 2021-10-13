@@ -1,18 +1,18 @@
 import axios, { AxiosResponse } from "axios";
 // Types
 import { Dispatch } from "redux";
-import { CategoryType, ModalAction, MovementType, NumberParam, StringParam } from "../../types";
+import { AccountType, CategoryType, ModalAction, MovementType, NumberParam, StringParam } from "../../types";
 import { HomePageAction } from "./HomePage.actions";
 import { HomePageActionTypes } from "./HomePage.actionTypes";
 import { GridRowParams } from "@material-ui/data-grid";
 // Const
-import { categoriesURL, movementsURL } from "../../const/ServerURL";
+import { accountsURL, categoriesURL, movementsURL } from "../../const/ServerURL";
 
-export const fetchMovements = (type: StringParam, dateFrom: string, dateTo: string, categoryId: NumberParam, userId: number) => {
+export const fetchMovements = (type: StringParam, dateFrom: string, dateTo: string, categoryId: NumberParam, userId: number, accountId: number) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.FETCH_MOVEMENTS_BEGIN });
         try {
-            const response: AxiosResponse = await axios.post(`${movementsURL}/get`, { type, dateFrom, dateTo, categoryId, userId });
+            const response: AxiosResponse = await axios.post(`${movementsURL}/get`, { type, dateFrom, dateTo, categoryId, userId, accountId });
             const movements: MovementType[] = response.data;
 
             dispatch({ type: HomePageActionTypes.FETCH_MOVEMENTS_SUCCESS, payload: { movements } })
@@ -34,6 +34,21 @@ export const fetchCategories = (userId: number) => {
         }
         catch (err: any) {
             dispatch({ type: HomePageActionTypes.FETCH_CATEGORIES_FAILED, payload: { error: err } })
+        }
+    }
+};
+
+export const fetchAccounts = (userId: number) => {
+    return async (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({ type: HomePageActionTypes.FETCH_ACCOUNTS_BEGIN });
+        try {
+            const response: AxiosResponse = await axios.post(`${accountsURL}/get`, { userId });
+            const accounts: AccountType[] = response.data;
+
+            dispatch({ type: HomePageActionTypes.FETCH_ACCOUNTS_SUCCESS, payload: { accounts } })
+        }
+        catch (err: any) {
+            dispatch({ type: HomePageActionTypes.FETCH_ACCOUNTS_FAILED, payload: { error: err } })
         }
     }
 };
@@ -64,12 +79,12 @@ export const closeModal = () => {
     }
 };
 
-export const addMovement = (type: string, amount: number, date: string, description: string, categoryId: number, userId: number) => {
+export const addMovement = (type: string, amount: number, date: string, description: string, categoryId: number, userId: number, accountId: number) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_BEGIN })
         try {
             await axios.post(`${movementsURL}/add`, {
-                type, amount, date, description, categoryId, userId
+                type, amount, date, description, categoryId, userId, accountId
             });
             dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_SUCCESS })
         }
@@ -104,5 +119,11 @@ export const deleteMovement = (movementId: number) => {
         catch (err) {
             dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_FAILED, payload: { error: err } })
         }
+    }
+};
+
+export const changeSelectedAccount = (accountId: number) => {
+    return (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({ type: HomePageActionTypes.CHANGE_SELECTED_ACCOUNT, payload: { accountId } })
     }
 };

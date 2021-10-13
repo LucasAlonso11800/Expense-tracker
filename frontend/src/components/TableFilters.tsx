@@ -15,7 +15,7 @@ const validationSchema = yup.object({
 
 export default function TableFilters() {
     const dispatch = useDispatch();
-    const { categoriesLoading, categories } = useSelector((state: State) => state.HomePage);
+    const { categoriesLoading, categories, accountId } = useSelector((state: State) => state.HomePage);
 
     const initialDateFrom = new Date().setDate(1);
 
@@ -29,7 +29,7 @@ export default function TableFilters() {
         validationSchema,
         onSubmit: (values) => {
             const { category, type, dateFrom, dateTo } = values;
-            dispatch(fetchMovements(type === 'all' ? null : type, dateFrom, dateTo, category === 'all' ? null : parseInt(category), 1));
+            dispatch(fetchMovements(type === 'all' ? null : type, dateFrom, dateTo, category === 'all' ? null : parseInt(category), 1, accountId));
         }
     });
 

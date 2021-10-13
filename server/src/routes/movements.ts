@@ -5,12 +5,12 @@ import { mysqlQuery } from "../helpers/MySQLPromise";
 export const router = Router();
 
 router.post('/add', async (req, res) => {
-    const { type, amount, date, description, categoryId, userId } = req.body;
+    const { type, amount, date, description, categoryId, userId, accountId } = req.body;
 
     const query = `
         INSERT INTO movements 
-        (movement_type, movement_amount, movement_date, movement_description, movement_category_id, movement_user_id)
-        VALUES ("${type}", ${amount}, "${date}", "${description}", ${categoryId}, ${userId})
+        (movement_type, movement_amount, movement_date, movement_description, movement_category_id, movement_user_id, movement_account_id)
+        VALUES ("${type}", ${amount}, "${date}", "${description}", ${categoryId}, ${userId}, ${accountId})
     `;
 
     try {
@@ -23,9 +23,9 @@ router.post('/add', async (req, res) => {
 });
 
 router.post('/get', async (req, res) => {
-    const { type, dateFrom, dateTo, categoryId, userId } = req.body;
+    const { type, dateFrom, dateTo, categoryId, userId, accountId } = req.body;
 
-    const where = getMovementsConditional(type, dateFrom, dateTo, categoryId, userId);
+    const where = getMovementsConditional(type, dateFrom, dateTo, categoryId, userId, accountId);
 
     const query = `
         SELECT
