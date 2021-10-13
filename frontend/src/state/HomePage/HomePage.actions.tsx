@@ -55,16 +55,16 @@ type HomePageCloseModalAction = {
     type: HomePageActionTypes.CLOSE_MODAL
 };
 
-type HomePageAddMovementBeginAction = {
-    type: HomePageActionTypes.ADD_MOVEMENT_BEGIN
+type HomePageMutateMovementBeginAction = {
+    type: HomePageActionTypes.MUTATE_MOVEMENT_BEGIN
 };
 
-type HomePageAddMovementSuccessAction = {
-    type: HomePageActionTypes.ADD_MOVEMENT_SUCCESS
+type HomePageMutateMovementSuccessAction = {
+    type: HomePageActionTypes.MUTATE_MOVEMENT_SUCCESS
 };
 
-type HomePageAddMovementFailedAction = {
-    type: HomePageActionTypes.ADD_MOVEMENT_FAILED,
+type HomePageMutateMovementFailedAction = {
+    type: HomePageActionTypes.MUTATE_MOVEMENT_FAILED,
     payload: {
         error: any
     }
@@ -80,7 +80,7 @@ export type HomePageAction =
     HomePageSelectRowAction |
     HomePageOpenModalAction |
     HomePageCloseModalAction |
-    HomePageAddMovementBeginAction | 
-    HomePageAddMovementSuccessAction |
-    HomePageAddMovementFailedAction
+    HomePageMutateMovementBeginAction | 
+    HomePageMutateMovementSuccessAction |
+    HomePageMutateMovementFailedAction
     ;

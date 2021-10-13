@@ -66,15 +66,43 @@ export const closeModal = () => {
 
 export const addMovement = (type: string, amount: number, date: string, description: string, categoryId: number, userId: number) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
-        dispatch({ type: HomePageActionTypes.ADD_MOVEMENT_BEGIN })
+        dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_BEGIN })
         try {
             await axios.post(`${movementsURL}/add`, {
                 type, amount, date, description, categoryId, userId
             });
-            dispatch({ type: HomePageActionTypes.ADD_MOVEMENT_SUCCESS })
+            dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_SUCCESS })
         }
         catch (err) {
-            dispatch({ type: HomePageActionTypes.ADD_MOVEMENT_FAILED, payload: { error: err } })
+            dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_FAILED, payload: { error: err } })
+        }
+    }
+};
+
+export const editMovement = (movementId: number, type: string, amount: number, date: string, description: string, categoryId: number) => {
+    return async (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_BEGIN })
+        try {
+            await axios.post(`${movementsURL}/update`, {
+                id: movementId, type, amount, date, description, categoryId
+            });
+            dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_SUCCESS })
+        }
+        catch (err) {
+            dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_FAILED, payload: { error: err } })
+        }
+    }
+};
+
+export const deleteMovement = (movementId: number) => {
+    return async (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_BEGIN })
+        try {
+            await axios.post(`${movementsURL}/delete`, { id: movementId });
+            dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_SUCCESS })
+        }
+        catch (err) {
+            dispatch({ type: HomePageActionTypes.MUTATE_MOVEMENT_FAILED, payload: { error: err } })
         }
     }
 };

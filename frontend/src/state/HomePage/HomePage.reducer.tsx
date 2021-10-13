@@ -83,17 +83,17 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
             modalAction: null,
             modalOpen: false,
         };
-        case HomePageActionTypes.ADD_MOVEMENT_BEGIN: return {
+        case HomePageActionTypes.MUTATE_MOVEMENT_BEGIN: return {
             ...state,
             modalLoading: true
         };
-        case HomePageActionTypes.ADD_MOVEMENT_SUCCESS: return {
+        case HomePageActionTypes.MUTATE_MOVEMENT_SUCCESS: return {
             ...state,
             modalOpen: false,
             modalAction: null,
             modalLoading: false
         };
-        case HomePageActionTypes.ADD_MOVEMENT_FAILED: {
+        case HomePageActionTypes.MUTATE_MOVEMENT_FAILED: {
             const { error } = action.payload;
             console.log(error);
             return state

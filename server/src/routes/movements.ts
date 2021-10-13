@@ -34,6 +34,7 @@ router.post('/get', async (req, res) => {
             movement_amount AS amount,
             movement_date AS date,
             movement_description AS description,
+            movement_category_id AS categoryId,
             category_name AS category
         FROM movements
         JOIN categories
@@ -74,7 +75,6 @@ router.post('/update', async (req, res) => {
 
 router.post('/delete', async (req, res) => {
     const { id } = req.body;
-    
     const query = `DELETE FROM movements WHERE movement_id = ${id}`
     
     try {

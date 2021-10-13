@@ -48,33 +48,46 @@ const validationSchema = yup.object({
     category: yup.string().required('Please select a category'),
 });
 
+const startOfTheMonth = new Date().setDate(1);
+const dateFrom = new Date(startOfTheMonth).toISOString().substring(0, 10);
+const dateTo = new Date().toISOString().substring(0, 10);
+
 export default function MovementsModal() {
     const dispatch = useDispatch();
     const { modalOpen, modalAction, modalLoading, categories, categoriesLoading, rowSelected } = useSelector((state: State) => state.HomePage);
 
-    const { closeModal, addMovement, fetchMovements } = bindActionCreators(HomePageActionCreators, dispatch);
+    const { closeModal, addMovement, editMovement, deleteMovement, fetchMovements } = bindActionCreators(HomePageActionCreators, dispatch);
+    
+    const refreshTable = () => fetchMovements(null, dateFrom, dateTo, null, 1);
 
     const formik = useFormik({
         initialValues: {
-            date: rowSelected ? rowSelected.row.date : new Date().toISOString().substring(0, 10),
+            date: rowSelected ? rowSelected.row.date : dateTo,
             type: rowSelected ? rowSelected.row.type : 'I',
             amount: rowSelected ? rowSelected.row.amount : 1000,
             description: rowSelected ? rowSelected.row.description : '',
-            category: rowSelected ? rowSelected.row.category : 1
+            category: rowSelected ? rowSelected.row.categoryId : 1
         },
+        enableReinitialize: true,
         validationSchema,
         onSubmit: (values) => {
             const { type, amount, date, description, category } = values;
             switch (modalAction) {
                 case 'Add': {
                     addMovement(type, amount, date, description, category, 1);
-                    fetchMovements(null,
-                        '2021-10-01',
-                        new Date().toISOString().substring(0, 10),
-                        null,
-                        1);
+                    refreshTable();
                     return
-                }
+                };
+                case 'Edit': {
+                    editMovement(rowSelected?.row.id, type, amount, date, description, category);
+                    refreshTable()
+                    return
+                };
+                case 'Delete': {
+                    deleteMovement(rowSelected?.row.id);
+                    refreshTable();
+                    return
+                };
                 default: return
             }
         }
@@ -94,7 +107,7 @@ export default function MovementsModal() {
                         InputLabelProps={{ shrink: true }}
                         disabled={modalAction === 'Delete' || modalLoading}
                         error={formik.touched.date && Boolean(formik.errors.date)}
-                        helperText={formik.touched.date && formik.errors.date} 
+                        helperText={formik.touched.date && formik.errors.date}
                         value={formik.values.date}
                         onChange={formik.handleChange}
                         className={classes.textField}
