@@ -71,6 +71,15 @@ export const selectCategory = (row: GridRowParams | null) => {
     }
 };
 
+export const selectAccount = (row: GridRowParams | null) => {
+    return (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({
+            type: HomePageActionTypes.SELECT_ACCOUNT,
+            payload: { row }
+        })
+    }
+};
+
 export const openModal = (modalAction: ModalAction) => {
     return (dispatch: Dispatch<HomePageAction>) => {
         dispatch({
@@ -162,7 +171,46 @@ export const deleteCategory = (categoryId: number, userId: number) => {
         dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
         try {
             await axios.post(`${categoriesURL}/delete`, { id: categoryId, userId });
-            dispatch({ type: HomePageActionTypes.MUTATE_CATEGORY_SUCCESS })
+            dispatch({ type: HomePageActionTypes.MUTATE_ACCOUNT_SUCCESS })
+        }
+        catch (err) {
+            dispatch({ type: HomePageActionTypes.MUTATE_FAILED, payload: { error: err } })
+        }
+    }
+};
+
+export const addAccount = (name: string, userId: number) => {
+    return async (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
+        try {
+            await axios.post(`${accountsURL}/add`, { name, userId });
+            dispatch({ type: HomePageActionTypes.MUTATE_ACCOUNT_SUCCESS })
+        }
+        catch (err) {
+            dispatch({ type: HomePageActionTypes.MUTATE_FAILED, payload: { error: err } })
+        }
+    }
+};
+
+export const editAccount = (accountId: number, name: string) => {
+    return async (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
+        try {
+            await axios.post(`${accountsURL}/update`, { id: accountId, name });
+            dispatch({ type: HomePageActionTypes.MUTATE_ACCOUNT_SUCCESS })
+        }
+        catch (err) {
+            dispatch({ type: HomePageActionTypes.MUTATE_FAILED, payload: { error: err } })
+        }
+    }
+};
+
+export const deleteAccount = (accountId: number, userId: number) => {
+    return async (dispatch: Dispatch<HomePageAction>) => {
+        dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
+        try {
+            await axios.post(`${accountsURL}/delete`, { id: accountId, userId });
+            dispatch({ type: HomePageActionTypes.MUTATE_ACCOUNT_SUCCESS })
         }
         catch (err) {
             dispatch({ type: HomePageActionTypes.MUTATE_FAILED, payload: { error: err } })

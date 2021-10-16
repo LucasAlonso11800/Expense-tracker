@@ -12,7 +12,7 @@ export const modalInfo = {
         button: 'Delete'
     },
     'CategoriesTable': {
-        title:  'Categories',
+        title: 'Categories',
         button: 'Close'
     },
     'AddCategory': {
@@ -25,6 +25,22 @@ export const modalInfo = {
     },
     'DeleteCategory': {
         title: 'Delete Category',
+        button: 'Delete'
+    },
+    'AccountsTable': {
+        title: 'Accounts',
+        button: 'Close'
+    },
+    'AddAccount': {
+        title: 'Add Account',
+        button: 'Add'
+    },
+    'EditAccount': {
+        title: 'Edit Account',
+        button: 'Edit'
+    },
+    'DeleteAccount': {
+        title: 'Delete Account',
         button: 'Delete'
     },
 };

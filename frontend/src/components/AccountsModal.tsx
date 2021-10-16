@@ -44,33 +44,33 @@ const validationSchema = yup.object({
     name: yup.string().required('Please enter a name')
 });
 
-export default function CategoriesModal() {
+export default function AccountsModal() {
     const dispatch = useDispatch();
-    const { modalOpen, modalAction, modalLoading, categorySelected } = useSelector((state: State) => state.HomePage);
+    const { modalOpen, modalAction, modalLoading, accountSelected } = useSelector((state: State) => state.HomePage);
 
-    const { addCategory, editCategory, deleteCategory, fetchCategories, openModal } = bindActionCreators(HomePageActionCreators, dispatch);
+    const { openModal, addAccount, editAccount, deleteAccount, fetchAccounts } = bindActionCreators(HomePageActionCreators, dispatch);
 
-    const refreshTable = () => fetchCategories(1);
+    const refreshTable = () => fetchAccounts(1);
 
     const formik = useFormik({
         initialValues: {
-            name: categorySelected ? categorySelected.row.name : '',
+            name: accountSelected ? accountSelected.row.name : '',
         },
         enableReinitialize: true,
         validationSchema,
         onSubmit: (values) => {
             const { name } = values;
             switch (modalAction) {
-                case 'AddCategory':
-                    addCategory(name, 1);
+                case 'AddAccount':
+                    addAccount(name, 1);
                     refreshTable();
                     return;
-                case 'EditCategory':
-                    editCategory(categorySelected?.row.id, name);
+                case 'EditAccount':
+                    editAccount(accountSelected?.row.id, name);
                     refreshTable()
                     return;
-                case 'DeleteCategory':
-                    deleteCategory(categorySelected?.row.id, 1);
+                case 'DeleteAccount':
+                    deleteAccount(accountSelected?.row.id, 1);
                     refreshTable();
                     return;
                 default: return
@@ -80,20 +80,20 @@ export default function CategoriesModal() {
 
     const classes = useStyles();
 
-    const isCategoriesModal = modalAction === 'AddCategory' || modalAction === 'EditCategory' || modalAction === 'DeleteCategory';
+    const isAccountsModal = modalAction === 'AddAccount' || modalAction === 'EditAccount' || modalAction === 'DeleteAccount';
 
     return (
-        <Modal open={modalOpen && isCategoriesModal} className={classes.root}>
+        <Modal open={modalOpen && isAccountsModal} className={classes.root}>
             <Paper className={classes.paper}>
                 <h3 className={classes.title}>{modalAction ? modalInfo[modalAction].title : ''}</h3>
                 <FormGroup className={classes.formGroup}>
                     <TextField
-                        label="Category"
+                        label="Account"
                         name="name"
-                        placeholder="Insert category name"
+                        placeholder="Insert account name"
                         type="text"
                         InputLabelProps={{ shrink: true }}
-                        disabled={modalAction === 'DeleteCategory' || modalLoading}
+                        disabled={modalAction === 'DeleteAccount' || modalLoading}
                         error={formik.touched.name && Boolean(formik.errors.name)}
                         helperText={formik.touched.name && formik.errors.name}
                         value={formik.values.name}
@@ -104,7 +104,7 @@ export default function CategoriesModal() {
                     {modalLoading && <CircularProgress />}
 
                     <div className="modal__buttons-container">
-                        <Button type="button" onClick={() => openModal('CategoriesTable')}>Close</Button>
+                        <Button type="button" onClick={() => openModal('AccountsTable')}>Close</Button>
                         <Button type="submit" onClick={() => formik.handleSubmit()}>{modalAction ? modalInfo[modalAction].button : ''}</Button>
                     </div>
                 </FormGroup>

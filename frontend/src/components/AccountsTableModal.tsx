@@ -5,7 +5,7 @@ import { DataGrid } from '@material-ui/data-grid'
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../state/RootReducer';
-import { closeModal, openModal, selectCategory } from '../state/HomePage/HomePage.actionCreators';
+import { closeModal, openModal, selectAccount } from '../state/HomePage/HomePage.actionCreators';
 // Helpers
 import { generateTableColumns } from '../helpers/GenerateTableColumns';
 // Const
@@ -45,41 +45,41 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function CategoriesTableModal() {
+export default function AccountsTableModal() {
     const dispatch = useDispatch();
-    const { categories, categoriesLoading, modalOpen, modalAction, categorySelected } = useSelector((state: State) => state.HomePage);
+    const { accounts, accountsLoading, modalOpen, modalAction, accountSelected } = useSelector((state: State) => state.HomePage);
 
     const tableColumns = generateTableColumns(CategoriesTableTitles);
 
     const classes = useStyles();
 
-    const isCategoriesModal = modalAction === 'CategoriesTable';
+    const isAccountsModal = modalAction === 'AccountsTable';
 
     return (
-        <Modal open={modalOpen && isCategoriesModal} className={classes.root}>
+        <Modal open={modalOpen && isAccountsModal} className={classes.root}>
             <Paper className={classes.paper}>
                 <h3 className={classes.title}>{modalAction ? modalInfo[modalAction].title : ''}</h3>
                 <div className={classes.dataContainer}>
-                    {categoriesLoading ?
+                    {accountsLoading ?
                         <CircularProgress /> :
                         <DataGrid
-                            rows={categories.filter((category) => category.root === 'N')}
+                            rows={accounts.filter((account) => account.root === 'N')}
                             columns={tableColumns}
                             hideFooter
                             rowHeight={36}
                             headerHeight={54}
-                            onRowClick={() => dispatch(selectCategory(null))}
-                            onRowDoubleClick={(row) => dispatch(selectCategory(row))}
+                            onRowClick={() => dispatch(selectAccount(null))}
+                            onRowDoubleClick={(row) => dispatch(selectAccount(row))}
                         />
                     }
-                    {categorySelected ?
+                    {accountSelected ?
                         <ButtonGroup>
-                            <Button type="button" onClick={() => dispatch(openModal('EditCategory'))}>Edit</Button>
-                            <Button type="button" onClick={() => dispatch(openModal('DeleteCategory'))}>Delete</Button>
+                            <Button type="button" onClick={() => dispatch(openModal('EditAccount'))}>Edit</Button>
+                            <Button type="button" onClick={() => dispatch(openModal('DeleteAccount'))}>Delete</Button>
                         </ButtonGroup>
                         :
                         <ButtonGroup>
-                            <Button type="button" onClick={() => dispatch(openModal('AddCategory'))}>Add</Button>
+                            <Button type="button" onClick={() => dispatch(openModal('AddAccount'))}>Add</Button>
                             <Button type="button" onClick={() => dispatch(closeModal())}>{modalAction ? modalInfo[modalAction].button : ''}</Button>
                         </ButtonGroup>
                     }

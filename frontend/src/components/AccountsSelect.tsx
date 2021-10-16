@@ -29,12 +29,12 @@ export default function AccountsSelect() {
 
     useEffect(() => {
         dispatch(fetchAccounts(1))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(fetchMovements(null, dateFrom, dateTo, null, 1, accountSelected));
         dispatch(changeSelectedAccount(accountSelected));
-    }, [accountSelected]);
+    }, [dispatch, accountSelected]);
 
     return (
         <TextField

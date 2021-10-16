@@ -25,11 +25,11 @@ export default function Buttons() {
         <ButtonGroup className={classes.root}>
             <Button type="button" onClick={() => dispatch(openModal('Edit'))}>Edit</Button>
             <Button type="button" onClick={() => dispatch(openModal('Delete'))}>Delete</Button>
-            <Button type="button" onClick={() => dispatch(openModal('CategoriesTable'))}>Manage Categories</Button>
         </ButtonGroup>
         :
         <ButtonGroup className={classes.root}>
             <Button type="button" onClick={() => dispatch(openModal('Add'))}>Add</Button>
             <Button type="button" onClick={() => dispatch(openModal('CategoriesTable'))}>Manage Categories</Button>
+            <Button type="button" onClick={() => dispatch(openModal('AccountsTable'))}>Manage Accounts</Button>
         </ButtonGroup>
 };
