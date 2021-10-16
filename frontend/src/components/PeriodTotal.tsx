@@ -20,7 +20,7 @@ export default function PeriodTotal() {
             const response: any = await axios.post(`${accountsURL}/get-totals`, { accountId, userId: 1 });
             setAccountTotal(response.data);
         })();
-    }, [accountId]);
+    }, [accountId, movements]);
 
     return (
         <>
