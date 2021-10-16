@@ -17,7 +17,7 @@ export default function PeriodTotal() {
 
     useEffect(() => {
         (async () => {
-            const response: any = await axios.post(`${accountsURL}/get-totals`, { accountId });
+            const response: any = await axios.post(`${accountsURL}/get-totals`, { accountId, userId: 1 });
             setAccountTotal(response.data);
         })();
     }, [accountId]);

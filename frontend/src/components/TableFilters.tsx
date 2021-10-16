@@ -1,10 +1,14 @@
 import React from 'react';
-import { useFormik } from 'formik';
+// Components
 import { Button, FormGroup, TextField } from '@material-ui/core';
+// Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { State } from '../state/RootReducer';
-import * as yup from 'yup';
 import { fetchMovements } from '../state/HomePage/HomePage.actionCreators';
+// Form
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+// Types
+import { State } from '../state/RootReducer';
 
 const validationSchema = yup.object({
     category: yup.string().required('Select an option'),
@@ -34,7 +38,7 @@ export default function TableFilters() {
     });
 
     return (
-        <FormGroup className="table-filter__container">
+        <FormGroup>
             <TextField
                 label="Category"
                 name="category"

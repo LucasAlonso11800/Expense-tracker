@@ -3,6 +3,11 @@ import { mysqlQuery } from "../helpers/MySQLPromise";
 
 export const router = Router();
 
+type TotalsResponse = {
+    amount: number
+    type: 'I' | 'O'
+}[];
+
 router.post('/add', async (req, res) => {
     const { userId, name } = req.body;
 
@@ -44,16 +49,27 @@ router.post('/get', async (req, res) => {
 });
 
 router.post('/get-totals', async (req, res) => {
-    const { accountId } = req.body;
+    const { accountId, userId } = req.body;
 
     const query = `
-        SELECT SUM(movement_amount) AS accountTotal FROM movements
+        SELECT 
+            movement_amount AS amount,
+            movement_type AS type    
+        FROM movements
         WHERE movement_account_id = ${accountId}
+        AND movement_user_id = ${userId}
     `;
 
     try {
-        const response = await mysqlQuery(query);
-        res.json(response[0].accountTotal);
+        const response: TotalsResponse = await mysqlQuery(query);
+
+        const total: number = response.reduce((acc, row) => {
+            if(row.type === 'I') return acc + row.amount;
+            if(row.type === 'O') return acc - row.amount;
+            return acc;
+        }, 0);
+
+        res.json(total);
     }
     catch (err: any) {
         throw new Error(err);
