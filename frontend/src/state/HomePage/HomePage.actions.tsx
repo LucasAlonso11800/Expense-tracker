@@ -61,6 +61,13 @@ type HomePageSelectRowAction = {
     }
 };
 
+type HomePageSelectCategoryAction = {
+    type: HomePageActionTypes.SELECT_CATEGORY,
+    payload: {
+        row: GridRowParams | null
+    }
+};
+
 type HomePageOpenModalAction = {
     type: HomePageActionTypes.OPEN_MODAL,
     payload: {
@@ -72,16 +79,20 @@ type HomePageCloseModalAction = {
     type: HomePageActionTypes.CLOSE_MODAL
 };
 
-type HomePageMutateMovementBeginAction = {
-    type: HomePageActionTypes.MUTATE_MOVEMENT_BEGIN
+type HomePageMutateBeginAction = {
+    type: HomePageActionTypes.MUTATE_BEGIN
 };
 
 type HomePageMutateMovementSuccessAction = {
     type: HomePageActionTypes.MUTATE_MOVEMENT_SUCCESS
 };
 
-type HomePageMutateMovementFailedAction = {
-    type: HomePageActionTypes.MUTATE_MOVEMENT_FAILED,
+type HomePageMutateCategorySuccessAction = {
+    type: HomePageActionTypes.MUTATE_CATEGORY_SUCCESS
+};
+
+type HomePageMutateFailedAction = {
+    type: HomePageActionTypes.MUTATE_FAILED,
     payload: {
         error: any
     }
@@ -105,10 +116,12 @@ export type HomePageAction =
     HomePageFetchAccountsSuccessAction |
     HomePageFetchAccountsFailedAction |
     HomePageSelectRowAction |
+    HomePageSelectCategoryAction |
     HomePageOpenModalAction |
     HomePageCloseModalAction |
-    HomePageMutateMovementBeginAction | 
+    HomePageMutateBeginAction | 
     HomePageMutateMovementSuccessAction |
-    HomePageMutateMovementFailedAction |
+    HomePageMutateCategorySuccessAction |
+    HomePageMutateFailedAction |
     HomePageChangeSelectedAccountAction
     ;

@@ -92,8 +92,10 @@ export default function MovementsModal() {
 
     const classes = useStyles();
 
+    const isMovementsModal = modalAction === 'Add' || modalAction === 'Edit' || modalAction === 'Delete';
+
     return (
-        <Modal open={modalOpen} className={classes.root}>
+        <Modal open={modalOpen && isMovementsModal} className={classes.root}>
             <Paper className={classes.paper}>
                 <h3 className={classes.title}>{modalAction ? modalInfo[modalAction].title : ''}</h3>
                 <FormGroup className={classes.formGroup}>
@@ -141,6 +143,7 @@ export default function MovementsModal() {
                         label="Description"
                         name="description"
                         type="text"
+                        placeholder="Insert movement description"
                         InputLabelProps={{ shrink: true }}
                         disabled={modalAction === 'Delete' || modalLoading}
                         error={formik.touched.description && Boolean(formik.errors.description)}

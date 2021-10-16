@@ -14,6 +14,7 @@ type HomePageState = {
     modalAction: ModalAction
     modalLoading: boolean
     rowSelected: GridRowParams | null
+    categorySelected: GridRowParams | null
     accountId: number
 };
 
@@ -28,6 +29,7 @@ const initialState: HomePageState = {
     modalAction: null,
     modalLoading: false,
     rowSelected: null,
+    categorySelected: null,
     accountId: 1
 };
 
@@ -94,6 +96,13 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
                 rowSelected: row
             }
         };
+        case HomePageActionTypes.SELECT_CATEGORY: {
+            const { row } = action.payload;
+            return {
+                ...state,
+                categorySelected: row
+            }
+        };
         case HomePageActionTypes.OPEN_MODAL: {
             const { modalAction } = action.payload;
             return {
@@ -107,7 +116,7 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
             modalAction: null,
             modalOpen: false,
         };
-        case HomePageActionTypes.MUTATE_MOVEMENT_BEGIN: return {
+        case HomePageActionTypes.MUTATE_BEGIN: return {
             ...state,
             modalLoading: true
         };
@@ -118,7 +127,13 @@ export const HomePageReducer = (state: HomePageState = initialState, action: Hom
             modalLoading: false,
             rowSelected: null
         };
-        case HomePageActionTypes.MUTATE_MOVEMENT_FAILED: {
+        case HomePageActionTypes.MUTATE_CATEGORY_SUCCESS: return {
+            ...state,
+            modalAction: 'CategoriesTable',
+            modalLoading: false,
+            categorySelected: null
+        };
+        case HomePageActionTypes.MUTATE_FAILED: {
             const { error } = action.payload;
             console.log(error);
             return state

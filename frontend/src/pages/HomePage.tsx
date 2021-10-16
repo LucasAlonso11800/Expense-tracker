@@ -6,12 +6,13 @@ import { fetchCategories } from '../state/HomePage/HomePage.actionCreators';
 import MovementsTable from '../components/MovementsTable';
 import TableFilters from '../components/TableFilters';
 import MovementsModal from '../components/MovementsModal';
+import CategoriesModal from '../components/CategoriesModal';
+import CategoriesTableModal from '../components/CategoriesTableModal';
 import PeriodTotal from '../components/PeriodTotal';
 import AccountsSelect from '../components/AccountsSelect';
 import Buttons from '../components/Buttons';
 // Types
-import { State } from '../state/RootReducer'
-import CategoryButtons from '../components/CategoryButtons';
+import { State } from '../state/RootReducer';
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -31,9 +32,10 @@ export default function HomePage() {
             <div className="actions-and-filters__container">
                 <Buttons />
                 <TableFilters />
-                <CategoryButtons />
             </div>
             <MovementsModal />
+            <CategoriesModal />
+            <CategoriesTableModal />
         </main>
     )
 };

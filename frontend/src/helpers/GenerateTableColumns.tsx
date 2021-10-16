@@ -8,6 +8,7 @@ const getWidth = (title: string): number => {
         case 'Amount': return 150;
         case 'Description': return 400;
         case 'Category': return 150;
+        case 'Name': return 250;
         default: return 0
     }
 };
@@ -25,12 +26,12 @@ export const generateTableColumns = (titles: string[]): GridColumns => {
             field: title.toLowerCase(),
             width: getWidth(title),
             valueGetter: (params) => {
-                if (title === 'Date'){
+                if (title === 'Date') {
                     return transformDate(params.value as string);
-                } 
-                if (title === 'Type'){
+                }
+                if (title === 'Type') {
                     return getType(params.value as string);
-                } 
+                }
                 return params.value
             },
             renderCell: (params) => {
@@ -42,11 +43,11 @@ export const generateTableColumns = (titles: string[]): GridColumns => {
             },
             sortComparator: (v1, v2) => {
                 if (typeof v1 === 'number' && typeof v2 === 'number') return v1 - v2;
-                if (typeof v1 === 'string' && typeof v2 === 'string'){
-                    if (/\d{4}-\d{2}-\d{2}/.test(transformDateBack(v1)) && /\d{4}-\d{2}-\d{2}/.test(transformDateBack(v2))){
-                        return parseInt(transformDateBack(v1).replace(/-/g, '')) - parseInt(transformDateBack(v2).replace(/-/g, '')) 
-                    } 
-    
+                if (typeof v1 === 'string' && typeof v2 === 'string') {
+                    if (/\d{4}-\d{2}-\d{2}/.test(transformDateBack(v1)) && /\d{4}-\d{2}-\d{2}/.test(transformDateBack(v2))) {
+                        return parseInt(transformDateBack(v1).replace(/-/g, '')) - parseInt(transformDateBack(v2).replace(/-/g, ''))
+                    }
+
                     let first = "";
                     for (let i = 0; i < v1.length; i++) {
                         first += v1[i].charCodeAt(0).toString(2) + " ";
