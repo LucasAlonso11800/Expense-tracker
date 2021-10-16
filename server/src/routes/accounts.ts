@@ -23,3 +23,20 @@ router.post('/get', async (req, res) => {
         throw new Error(err);
     }
 });
+
+router.post('/get-totals', async (req, res) => {
+    const { accountId } = req.body;
+
+    const query = `
+        SELECT SUM(movement_amount) AS accountTotal FROM movements
+        WHERE movement_account_id = ${accountId}
+    `;
+
+    try {
+        const response = await mysqlQuery(query);
+        res.json(response[0].accountTotal); 
+    }
+    catch (err: any) {
+        throw new Error(err);
+    }
+});

@@ -11,6 +11,7 @@ import AccountsSelect from '../components/AccountsSelect';
 import Buttons from '../components/Buttons';
 // Types
 import { State } from '../state/RootReducer'
+import CategoryButtons from '../components/CategoryButtons';
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -30,6 +31,7 @@ export default function HomePage() {
             <div className="actions-and-filters__container">
                 <Buttons />
                 <TableFilters />
+                <CategoryButtons />
             </div>
             <MovementsModal />
         </main>
