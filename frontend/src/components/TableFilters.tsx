@@ -9,6 +9,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 // Types
 import { State } from '../state/RootReducer';
+// Const
+import { dateFrom, dateTo } from '../const/Dates';
 
 const validationSchema = yup.object({
     category: yup.string().required('Select an option'),
@@ -21,14 +23,12 @@ export default function TableFilters() {
     const dispatch = useDispatch();
     const { categoriesLoading, categories, accountId } = useSelector((state: State) => state.HomePage);
 
-    const initialDateFrom = new Date().setDate(1);
-
     const formik = useFormik({
         initialValues: {
             category: 'all',
             type: 'all',
-            dateFrom: new Date(initialDateFrom).toISOString().substring(0, 10),
-            dateTo: new Date().toISOString().substring(0, 10)
+            dateFrom,
+            dateTo
         },
         validationSchema,
         onSubmit: (values) => {

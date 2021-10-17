@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { State } from '../state/RootReducer';
 import axios from 'axios';
+// Redux
+import { useSelector } from 'react-redux';
+// Types
+import { State } from '../state/RootReducer';
+// Const
 import { accountsURL } from '../const/ServerURL';
 
 export default function PeriodTotal() {

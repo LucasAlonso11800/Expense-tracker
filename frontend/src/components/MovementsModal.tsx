@@ -9,11 +9,12 @@ import * as yup from 'yup';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as HomePageActionCreators from '../state/HomePage/HomePage.actionCreators';
+import { closeModal, addMovement, editMovement, deleteMovement, fetchMovements } from '../state/HomePage/HomePage.actionCreators';
 // Types
 import { State } from '../state/RootReducer';
 // Const
 import { modalInfo } from '../const/ModalInfo';
+import { dateFrom, dateTo } from '../const/Dates';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -48,17 +49,11 @@ const validationSchema = yup.object({
     category: yup.string().required('Please select a category'),
 });
 
-const startOfTheMonth = new Date().setDate(1);
-const dateFrom = new Date(startOfTheMonth).toISOString().substring(0, 10);
-const dateTo = new Date().toISOString().substring(0, 10);
-
 export default function MovementsModal() {
     const dispatch = useDispatch();
     const { modalOpen, modalAction, modalLoading, categories, categoriesLoading, rowSelected, accountId } = useSelector((state: State) => state.HomePage);
 
-    const { closeModal, addMovement, editMovement, deleteMovement, fetchMovements } = bindActionCreators(HomePageActionCreators, dispatch);
-
-    const refreshTable = () => fetchMovements(null, dateFrom, dateTo, null, 1, accountId);
+    const refreshTable = () => dispatch(fetchMovements(null, dateFrom, dateTo, null, 1, accountId));
 
     const formik = useFormik({
         initialValues: {
@@ -74,15 +69,15 @@ export default function MovementsModal() {
             const { type, amount, date, description, category } = values;
             switch (modalAction) {
                 case 'Add':
-                    addMovement(type, amount, date, description, category, 1, accountId);
+                    dispatch(addMovement(type, amount, date, description, category, 1, accountId));
                     refreshTable();
                     return;
                 case 'Edit':
-                    editMovement(rowSelected?.row.id, type, amount, date, description, category);
+                    dispatch(editMovement(rowSelected?.row.id, type, amount, date, description, category));
                     refreshTable()
                     return;
                 case 'Delete': 
-                    deleteMovement(rowSelected?.row.id);
+                    dispatch(deleteMovement(rowSelected?.row.id));
                     refreshTable();
                     return;
                 default: return
@@ -171,7 +166,7 @@ export default function MovementsModal() {
                     {modalLoading && <CircularProgress />}
 
                     <div className="modal__buttons-container">
-                        <Button type="button" onClick={() => closeModal()}>Close</Button>
+                        <Button type="button" onClick={() => dispatch(closeModal())}>Close</Button>
                         <Button type="submit" onClick={() => formik.handleSubmit()}>{modalAction ? modalInfo[modalAction].button : ''}</Button>
                     </div>
                 </FormGroup>

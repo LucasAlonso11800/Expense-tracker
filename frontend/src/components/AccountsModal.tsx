@@ -8,8 +8,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as HomePageActionCreators from '../state/HomePage/HomePage.actionCreators';
+import { openModal, addAccount, editAccount, deleteAccount, fetchAccounts } from '../state/HomePage/HomePage.actionCreators';
 // Types
 import { State } from '../state/RootReducer';
 // Const
@@ -40,37 +39,31 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const validationSchema = yup.object({
-    name: yup.string().required('Please enter a name')
-});
+const validationSchema = yup.object({ name: yup.string().required('Please enter a name') });
 
 export default function AccountsModal() {
     const dispatch = useDispatch();
     const { modalOpen, modalAction, modalLoading, accountSelected } = useSelector((state: State) => state.HomePage);
 
-    const { openModal, addAccount, editAccount, deleteAccount, fetchAccounts } = bindActionCreators(HomePageActionCreators, dispatch);
-
-    const refreshTable = () => fetchAccounts(1);
+    const refreshTable = () => dispatch(fetchAccounts(1));
 
     const formik = useFormik({
-        initialValues: {
-            name: accountSelected ? accountSelected.row.name : '',
-        },
+        initialValues: { name: accountSelected ? accountSelected.row.name : '' },
         enableReinitialize: true,
         validationSchema,
         onSubmit: (values) => {
             const { name } = values;
             switch (modalAction) {
                 case 'AddAccount':
-                    addAccount(name, 1);
+                    dispatch(addAccount(name, 1));
                     refreshTable();
                     return;
                 case 'EditAccount':
-                    editAccount(accountSelected?.row.id, name);
+                    dispatch(editAccount(accountSelected?.row.id, name));
                     refreshTable()
                     return;
                 case 'DeleteAccount':
-                    deleteAccount(accountSelected?.row.id, 1);
+                    dispatch(deleteAccount(accountSelected?.row.id, 1));
                     refreshTable();
                     return;
                 default: return
@@ -104,7 +97,7 @@ export default function AccountsModal() {
                     {modalLoading && <CircularProgress />}
 
                     <div className="modal__buttons-container">
-                        <Button type="button" onClick={() => openModal('AccountsTable')}>Close</Button>
+                        <Button type="button" onClick={() => dispatch(openModal('AccountsTable'))}>Close</Button>
                         <Button type="submit" onClick={() => formik.handleSubmit()}>{modalAction ? modalInfo[modalAction].button : ''}</Button>
                     </div>
                 </FormGroup>

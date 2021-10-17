@@ -1,6 +1,8 @@
 import React from 'react';
+// Components
 import { AppBar, Toolbar, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+// Styles
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(() => ({

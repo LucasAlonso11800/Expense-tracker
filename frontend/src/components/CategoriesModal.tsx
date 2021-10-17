@@ -9,7 +9,7 @@ import * as yup from 'yup';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as HomePageActionCreators from '../state/HomePage/HomePage.actionCreators';
+import { addCategory, editCategory, deleteCategory, fetchCategories, openModal } from '../state/HomePage/HomePage.actionCreators';
 // Types
 import { State } from '../state/RootReducer';
 // Const
@@ -48,29 +48,25 @@ export default function CategoriesModal() {
     const dispatch = useDispatch();
     const { modalOpen, modalAction, modalLoading, categorySelected } = useSelector((state: State) => state.HomePage);
 
-    const { addCategory, editCategory, deleteCategory, fetchCategories, openModal } = bindActionCreators(HomePageActionCreators, dispatch);
-
-    const refreshTable = () => fetchCategories(1);
+    const refreshTable = () => dispatch(fetchCategories(1));
 
     const formik = useFormik({
-        initialValues: {
-            name: categorySelected ? categorySelected.row.name : '',
-        },
+        initialValues: { name: categorySelected ? categorySelected.row.name : '' },
         enableReinitialize: true,
         validationSchema,
         onSubmit: (values) => {
             const { name } = values;
             switch (modalAction) {
                 case 'AddCategory':
-                    addCategory(name, 1);
+                    dispatch(addCategory(name, 1));
                     refreshTable();
                     return;
                 case 'EditCategory':
-                    editCategory(categorySelected?.row.id, name);
+                    dispatch(editCategory(categorySelected?.row.id, name));
                     refreshTable()
                     return;
                 case 'DeleteCategory':
-                    deleteCategory(categorySelected?.row.id, 1);
+                    dispatch(deleteCategory(categorySelected?.row.id, 1));
                     refreshTable();
                     return;
                 default: return
@@ -104,7 +100,7 @@ export default function CategoriesModal() {
                     {modalLoading && <CircularProgress />}
 
                     <div className="modal__buttons-container">
-                        <Button type="button" onClick={() => openModal('CategoriesTable')}>Close</Button>
+                        <Button type="button" onClick={() => dispatch(openModal('CategoriesTable'))}>Close</Button>
                         <Button type="submit" onClick={() => formik.handleSubmit()}>{modalAction ? modalInfo[modalAction].button : ''}</Button>
                     </div>
                 </FormGroup>

@@ -6,6 +6,8 @@ import { makeStyles } from '@material-ui/styles';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSelectedAccount, fetchAccounts, fetchMovements } from '../state/HomePage/HomePage.actionCreators';
+// Const
+import { dateFrom, dateTo } from '../const/Dates';
 // Types
 import { State } from '../state/RootReducer';
 
@@ -15,26 +17,22 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const startOfTheMonth = new Date().setDate(1);
-const dateFrom = new Date(startOfTheMonth).toISOString().substring(0, 10);
-const dateTo = new Date().toISOString().substring(0, 10);
-
 export default function AccountsSelect() {
     const dispatch = useDispatch();
     const { accounts, accountsLoading, accountId } = useSelector((state: State) => state.HomePage);
     
     const [accountSelected, setAccountSelected] = useState(accountId);
 
-    const classes = useStyles();
-
     useEffect(() => {
         dispatch(fetchAccounts(1))
     }, [dispatch])
-
+    
     useEffect(() => {
         dispatch(fetchMovements(null, dateFrom, dateTo, null, 1, accountSelected));
         dispatch(changeSelectedAccount(accountSelected));
     }, [dispatch, accountSelected]);
+    
+    const classes = useStyles();
 
     return (
         <TextField
@@ -49,7 +47,6 @@ export default function AccountsSelect() {
             value={accountSelected}
             onChange={(e) => setAccountSelected(parseInt(e.target.value))}
         >
-            {/* <option value={1}>Daily usage</option> */}
             {accounts.map(account => {
                 return <option value={account.id} key={account.id}>{account.name}</option>
             })}
