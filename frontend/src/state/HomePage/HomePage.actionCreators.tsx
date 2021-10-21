@@ -7,8 +7,12 @@ import { HomePageActionTypes } from "./HomePage.actionTypes";
 import { GridRowParams } from "@material-ui/data-grid";
 // Const
 import { accountsURL, categoriesURL, movementsURL } from "../../const/ServerURL";
+// Helpers
+import { getLocalStorage } from "../../helpers/LocalStorage";
 
-export const fetchMovements = (type: StringParam, dateFrom: string, dateTo: string, categoryId: NumberParam, userId: number, accountId: number) => {
+const userId = getLocalStorage() ? getLocalStorage()?.id : null;
+
+export const fetchMovements = (type: StringParam, dateFrom: string, dateTo: string, categoryId: NumberParam, accountId: number) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.FETCH_MOVEMENTS_BEGIN });
         try {
@@ -23,7 +27,7 @@ export const fetchMovements = (type: StringParam, dateFrom: string, dateTo: stri
     };
 };
 
-export const fetchCategories = (userId: number) => {
+export const fetchCategories = () => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.FETCH_CATEGORIES_BEGIN });
         try {
@@ -38,7 +42,7 @@ export const fetchCategories = (userId: number) => {
     }
 };
 
-export const fetchAccounts = (userId: number) => {
+export const fetchAccounts = () => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.FETCH_ACCOUNTS_BEGIN });
         try {
@@ -97,7 +101,7 @@ export const closeModal = () => {
     }
 };
 
-export const addMovement = (type: string, amount: number, date: string, description: string, categoryId: number, userId: number, accountId: number) => {
+export const addMovement = (type: string, amount: number, date: string, description: string, categoryId: number, accountId: number) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
         try {
@@ -140,7 +144,7 @@ export const deleteMovement = (movementId: number) => {
     }
 };
 
-export const addCategory = (name: string, userId: number) => {
+export const addCategory = (name: string) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
         try {
@@ -166,7 +170,7 @@ export const editCategory = (categoryId: number, name: string) => {
     }
 };
 
-export const deleteCategory = (categoryId: number, userId: number) => {
+export const deleteCategory = (categoryId: number) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
         try {
@@ -179,7 +183,7 @@ export const deleteCategory = (categoryId: number, userId: number) => {
     }
 };
 
-export const addAccount = (name: string, userId: number) => {
+export const addAccount = (name: string) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
         try {
@@ -205,7 +209,7 @@ export const editAccount = (accountId: number, name: string) => {
     }
 };
 
-export const deleteAccount = (accountId: number, userId: number) => {
+export const deleteAccount = (accountId: number) => {
     return async (dispatch: Dispatch<HomePageAction>) => {
         dispatch({ type: HomePageActionTypes.MUTATE_BEGIN })
         try {

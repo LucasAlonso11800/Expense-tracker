@@ -8,7 +8,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { addCategory, editCategory, deleteCategory, fetchCategories, openModal } from '../state/HomePage/HomePage.actionCreators';
 // Types
 import { State } from '../state/RootReducer';
@@ -48,7 +47,7 @@ export default function CategoriesModal() {
     const dispatch = useDispatch();
     const { modalOpen, modalAction, modalLoading, categorySelected } = useSelector((state: State) => state.HomePage);
 
-    const refreshTable = () => dispatch(fetchCategories(1));
+    const refreshTable = () => dispatch(fetchCategories());
 
     const formik = useFormik({
         initialValues: { name: categorySelected ? categorySelected.row.name : '' },
@@ -58,7 +57,7 @@ export default function CategoriesModal() {
             const { name } = values;
             switch (modalAction) {
                 case 'AddCategory':
-                    dispatch(addCategory(name, 1));
+                    dispatch(addCategory(name));
                     refreshTable();
                     return;
                 case 'EditCategory':
@@ -66,7 +65,7 @@ export default function CategoriesModal() {
                     refreshTable()
                     return;
                 case 'DeleteCategory':
-                    dispatch(deleteCategory(categorySelected?.row.id, 1));
+                    dispatch(deleteCategory(categorySelected?.row.id));
                     refreshTable();
                     return;
                 default: return

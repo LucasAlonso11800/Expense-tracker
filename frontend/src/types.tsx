@@ -1,3 +1,9 @@
+export type UserData = {
+    id: string
+    username: string
+    token: string
+}
+
 export type MovementType = {
     id: number
     type: 'I' | 'O'

@@ -33,7 +33,13 @@ export default function TableFilters() {
         validationSchema,
         onSubmit: (values) => {
             const { category, type, dateFrom, dateTo } = values;
-            dispatch(fetchMovements(type === 'all' ? null : type, dateFrom, dateTo, category === 'all' ? null : parseInt(category), 1, accountId));
+            dispatch(fetchMovements(
+                type === 'all' ? null : type,
+                dateFrom,
+                dateTo,
+                category === 'all' ? null : parseInt(category),
+                accountId
+            ));
         }
     });
 

@@ -24,11 +24,11 @@ export default function AccountsSelect() {
     const [accountSelected, setAccountSelected] = useState(accountId);
 
     useEffect(() => {
-        dispatch(fetchAccounts(1))
+        dispatch(fetchAccounts())
     }, [dispatch])
     
     useEffect(() => {
-        dispatch(fetchMovements(null, dateFrom, dateTo, null, 1, accountSelected));
+        dispatch(fetchMovements(null, dateFrom, dateTo, null, accountSelected));
         dispatch(changeSelectedAccount(accountSelected));
     }, [dispatch, accountSelected]);
     

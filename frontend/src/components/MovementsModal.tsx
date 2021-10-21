@@ -8,7 +8,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { closeModal, addMovement, editMovement, deleteMovement, fetchMovements } from '../state/HomePage/HomePage.actionCreators';
 // Types
 import { State } from '../state/RootReducer';
@@ -53,12 +52,12 @@ export default function MovementsModal() {
     const dispatch = useDispatch();
     const { modalOpen, modalAction, modalLoading, categories, categoriesLoading, rowSelected, accountId } = useSelector((state: State) => state.HomePage);
 
-    const refreshTable = () => dispatch(fetchMovements(null, dateFrom, dateTo, null, 1, accountId));
+    const refreshTable = () => dispatch(fetchMovements(null, dateFrom, dateTo, null, accountId));
 
     const formik = useFormik({
         initialValues: {
             date: rowSelected ? rowSelected.row.date : dateTo,
-            type: rowSelected ? rowSelected.row.type : 'I',
+            type: rowSelected ? rowSelected.row.type : 'O',
             amount: rowSelected ? rowSelected.row.amount : 1000,
             description: rowSelected ? rowSelected.row.description : '',
             category: rowSelected ? rowSelected.row.categoryId : 1
@@ -69,7 +68,7 @@ export default function MovementsModal() {
             const { type, amount, date, description, category } = values;
             switch (modalAction) {
                 case 'Add':
-                    dispatch(addMovement(type, amount, date, description, category, 1, accountId));
+                    dispatch(addMovement(type, amount, date, description, category, accountId));
                     refreshTable();
                     return;
                 case 'Edit':

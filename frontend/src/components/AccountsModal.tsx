@@ -45,7 +45,7 @@ export default function AccountsModal() {
     const dispatch = useDispatch();
     const { modalOpen, modalAction, modalLoading, accountSelected } = useSelector((state: State) => state.HomePage);
 
-    const refreshTable = () => dispatch(fetchAccounts(1));
+    const refreshTable = () => dispatch(fetchAccounts());
 
     const formik = useFormik({
         initialValues: { name: accountSelected ? accountSelected.row.name : '' },
@@ -55,7 +55,7 @@ export default function AccountsModal() {
             const { name } = values;
             switch (modalAction) {
                 case 'AddAccount':
-                    dispatch(addAccount(name, 1));
+                    dispatch(addAccount(name));
                     refreshTable();
                     return;
                 case 'EditAccount':
@@ -63,7 +63,7 @@ export default function AccountsModal() {
                     refreshTable()
                     return;
                 case 'DeleteAccount':
-                    dispatch(deleteAccount(accountSelected?.row.id, 1));
+                    dispatch(deleteAccount(accountSelected?.row.id));
                     refreshTable();
                     return;
                 default: return

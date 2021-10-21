@@ -18,7 +18,7 @@ export default function HomePage() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchCategories(1));
+        dispatch(fetchCategories());
     }, [dispatch]);
 
     return (

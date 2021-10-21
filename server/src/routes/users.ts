@@ -14,7 +14,7 @@ type User = {
 const generateToken = (user: User) => {
     return jwt.sign({
         id: user.id,
-        username: user.username,
+        username: user.username
     }, process.env.JWT_SECRET_KEY as string, { expiresIn: '1h' })
 };
 
@@ -22,7 +22,6 @@ router.post('/add', async (req, res) => {
     const { username, password, email } = req.body;
 
     const hash = await bcrypt.hash(password, 10);
-
     const query = `
         INSERT INTO users (user_username, user_password, user_email)
         VALUES ("${username}", "${hash}", "${email}")
@@ -50,27 +49,28 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const getUserQuery = `
-    SELECT
-        user_id AS id,
-        user_username AS username,
-        user_email AS email,
-        user_password AS password
+        SELECT
+            user_id AS id,
+            user_username AS username,
+            user_email AS email,
+            user_password AS password
         FROM users 
-        WHERE user_email = "${email}"`;
+        WHERE user_email = "${email}"
+    `;
 
     const response: User[] = await mysqlQuery(getUserQuery);
     const user = response[0];
 
-    if (!user) throw new Error('Wrong username or password');
+    if (!user) throw new Error('Wrong email or password');
 
     const match = await bcrypt.compare(password, user.password as string);
-    if (!match) throw new Error('Wrong username or password');
+    if (!match) throw new Error('Wrong email or password');
 
     const token = generateToken(user);
 
-    return {
+    res.json({
         id: user.id,
         username: user.username,
         token
-    }
+    });
 });
