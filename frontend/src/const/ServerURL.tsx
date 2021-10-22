@@ -1,4 +1,4 @@
-export const serverURL = 'http://localhost:5000';
+export const serverURL = 'https://lucas-alonso-expense-tracker.herokuapp.com';
 
 export const movementsURL = `${serverURL}/movements`;
 export const categoriesURL = `${serverURL}/categories`;
