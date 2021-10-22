@@ -10,7 +10,7 @@ import { router as accountsRouter } from './routes/accounts';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -22,7 +22,7 @@ export const connection = mysql.createConnection({
 });
 
 connection.connect((err) => {
-    if(err) throw err;
+    if (err) throw err;
     console.log('Connected to MySQL');
 });
 
