@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 // Pages
 import NavBar from './components/Navbar';
-import { checkAuth } from './helpers/CheckAuth';
-import { getLocalStorage } from './helpers/LocalStorage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+// Helpers
+import { checkAuth } from './helpers/CheckAuth';
+import { getLocalStorage } from './helpers/LocalStorage';
 
 export default function App() {
     const user = getLocalStorage();
@@ -19,6 +21,7 @@ export default function App() {
         <Router>
             <NavBar />
             <Route path="/" exact component={LoginPage} />
+            <Route path="/register" exact component={RegisterPage} />
             <Route path="/home" exact component={HomePage} />
         </Router>
     );

@@ -21,16 +21,18 @@ const useStyles = makeStyles(() => ({
 }));
 
 const validationSchema = yup.object({
+    username: yup.string().required('Please enter an username'),
     email: yup.string().required('Please enter a valid email'),
     password: yup.string().required('Please enter a password')
 });
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const formik = useFormik({
         initialValues: {
+            username: '',
             email: '',
             password: ''
         },
@@ -40,13 +42,13 @@ export default function LoginPage() {
             (async () => {
                 setLoading(true);
                 try {
-                    const response: any = await axios.post(`${usersURL}/login`, { email, password });
+                    const response: any = await axios.post(`${usersURL}/register`, { username: values.username, email, password });
                     setLoading(false);
                     const { id, username, token } = response.data;
                     setLocalStorage(id, username, token);
                     window.location.assign('/home');
                 }
-                catch(err: any){
+                catch (err: any) {
                     setError(err);
                 }
             })();
@@ -59,6 +61,16 @@ export default function LoginPage() {
         <div>
             {loading && <CircularProgress />}
             <FormGroup className={classes.form}>
+                <TextField
+                    label="Username"
+                    name="username"
+                    placeholder="Insert username"
+                    type="text"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    InputLabelProps={{ shrink: true }}
+                    disabled={loading}
+                />
                 <TextField
                     label="Email"
                     name="email"
@@ -79,7 +91,7 @@ export default function LoginPage() {
                     InputLabelProps={{ shrink: true }}
                     disabled={loading}
                 />
-                <Button variant='contained' type='button' onClick={() => formik.handleSubmit()}>Login</Button>
+                <Button variant='contained' type='button' onClick={() => formik.handleSubmit()}>Register</Button>
             </FormGroup>
         </div>
     )

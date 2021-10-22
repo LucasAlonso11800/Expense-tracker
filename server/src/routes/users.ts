@@ -18,7 +18,7 @@ const generateToken = (user: User) => {
     }, process.env.JWT_SECRET_KEY as string, { expiresIn: '1h' })
 };
 
-router.post('/add', async (req, res) => {
+router.post('/register', async (req, res) => {
     const { username, password, email } = req.body;
 
     const hash = await bcrypt.hash(password, 10);
@@ -42,6 +42,7 @@ router.post('/add', async (req, res) => {
         if (err.sqlMessage && err.sqlMessage.startsWith('Duplicate entry')) {
             if (/users.user_email/.test(err.sqlMessage)) throw new Error("Email already registered");
         }
+        throw new Error(err)
     }
 });
 
