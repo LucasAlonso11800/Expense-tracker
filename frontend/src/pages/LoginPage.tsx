@@ -17,6 +17,13 @@ const useStyles = makeStyles(() => ({
         width: '40%',
         margin: '0 auto',
         padding: '2rem'
+    },
+    textField: {
+        marginBottom: '1rem'
+    },
+    circular: {
+        margin: 'auto',
+        marginBottom: '1rem'
     }
 }));
 
@@ -46,7 +53,7 @@ export default function LoginPage() {
                     setLocalStorage(id, username, token);
                     window.location.assign('/home');
                 }
-                catch(err: any){
+                catch (err: any) {
                     setError(err);
                 }
             })();
@@ -57,8 +64,8 @@ export default function LoginPage() {
 
     return (
         <div>
-            {loading && <CircularProgress />}
             <FormGroup className={classes.form}>
+                {loading && <CircularProgress className={classes.circular}/>}
                 <TextField
                     label="Email"
                     name="email"
@@ -68,6 +75,7 @@ export default function LoginPage() {
                     onChange={formik.handleChange}
                     InputLabelProps={{ shrink: true }}
                     disabled={loading}
+                    className={classes.textField}
                 />
                 <TextField
                     label="Password"
@@ -78,6 +86,7 @@ export default function LoginPage() {
                     onChange={formik.handleChange}
                     InputLabelProps={{ shrink: true }}
                     disabled={loading}
+                    className={classes.textField}
                 />
                 <Button variant='contained' type='button' onClick={() => formik.handleSubmit()}>Login</Button>
             </FormGroup>

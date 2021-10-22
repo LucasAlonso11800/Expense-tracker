@@ -17,6 +17,13 @@ const useStyles = makeStyles(() => ({
         width: '40%',
         margin: '0 auto',
         padding: '2rem'
+    },
+    textField: {
+        marginBottom: '1rem'
+    },
+    circular: {
+        margin: 'auto',
+        marginBottom: '1rem'
     }
 }));
 
@@ -59,8 +66,8 @@ export default function RegisterPage() {
 
     return (
         <div>
-            {loading && <CircularProgress />}
             <FormGroup className={classes.form}>
+                {loading && <CircularProgress className={classes.circular} />}
                 <TextField
                     label="Username"
                     name="username"
@@ -70,6 +77,7 @@ export default function RegisterPage() {
                     onChange={formik.handleChange}
                     InputLabelProps={{ shrink: true }}
                     disabled={loading}
+                    className={classes.textField}
                 />
                 <TextField
                     label="Email"
@@ -80,6 +88,7 @@ export default function RegisterPage() {
                     onChange={formik.handleChange}
                     InputLabelProps={{ shrink: true }}
                     disabled={loading}
+                    className={classes.textField}
                 />
                 <TextField
                     label="Password"
@@ -90,6 +99,7 @@ export default function RegisterPage() {
                     onChange={formik.handleChange}
                     InputLabelProps={{ shrink: true }}
                     disabled={loading}
+                    className={classes.textField}
                 />
                 <Button variant='contained' type='button' onClick={() => formik.handleSubmit()}>Register</Button>
             </FormGroup>
