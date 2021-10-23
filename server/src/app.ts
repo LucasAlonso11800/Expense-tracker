@@ -10,7 +10,7 @@ import { router as accountsRouter } from './routes/accounts';
 
 const app = express();
 
-app.use(cors({ credentials: true }));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
