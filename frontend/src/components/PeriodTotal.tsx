@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { State } from '../state/RootReducer';
 // Const
 import { accountsURL } from '../const/ServerURL';
+import { getLocalStorage } from '../helpers/LocalStorage';
 
 export default function PeriodTotal() {
     const [accountTotal, setAccountTotal] = useState(0);
@@ -20,7 +21,8 @@ export default function PeriodTotal() {
 
     useEffect(() => {
         (async () => {
-            const response: any = await axios.post(`${accountsURL}/get-totals`, { accountId, userId: 1 });
+            const userData = getLocalStorage();
+            const response: any = await axios.post(`${accountsURL}/get-totals`, { accountId, userId: userData?.id });
             setAccountTotal(response.data);
         })();
     }, [accountId, movements]);

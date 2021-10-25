@@ -24,7 +24,7 @@ export const getMovementsConditional = (
                 return acc
             };
             case 3: {
-                return acc + `AND movement_account_id = ${accountId}`
+                return acc + ` AND movement_account_id = ${accountId}`
             }
             default: return acc
         }
