@@ -36,8 +36,8 @@ export const generateTableColumns = (titles: string[]): GridColumns => {
             },
             renderCell: (params) => {
                 if (title === 'Amount') {
-                    if (params.row.type === 'I') return <p style={{ color: '#090' }}>${params.value}</p>
-                    if (params.row.type === 'O') return <p style={{ color: '#900' }}>- ${params.value}</p>
+                    if (params.row.type === 'I') return <p style={{ color: '#090', textAlign: 'right', width: '100%' }}>${params.value}</p>
+                    if (params.row.type === 'O') return <p style={{ color: '#900', textAlign: 'right', width: '100%' }}>- ${params.value}</p>
                 }
                 return params.value
             },

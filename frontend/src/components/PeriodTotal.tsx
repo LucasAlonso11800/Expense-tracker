@@ -7,6 +7,7 @@ import { State } from '../state/RootReducer';
 // Const
 import { accountsURL } from '../const/ServerURL';
 import { getLocalStorage } from '../helpers/LocalStorage';
+import { formatNumber } from '../helpers/FormatNumber';
 
 export default function PeriodTotal() {
     const [accountTotal, setAccountTotal] = useState(0);
@@ -29,8 +30,8 @@ export default function PeriodTotal() {
 
     return (
         <>
-            <p className="period-total"><b>Total of this period: </b>${total}</p>
-            <p className="period-total"><b>Account total: </b>${accountTotal}</p>
+            <p className="period-total"><b>Total of this period: </b>${formatNumber(total)}</p>
+            <p className="period-total"><b>Account total: </b>${formatNumber(accountTotal)}</p>
         </>
     )
 };
